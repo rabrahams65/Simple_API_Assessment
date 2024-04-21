@@ -10,40 +10,7 @@ namespace Simple_API_Assessment.Data
         
         }
 
-        public DbSet<Applicant>? Applicant { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
-            //Seed
-            modelBuilder.Entity<Applicant>().HasData(
-                new Applicant
-                {
-                    Id = 1,
-                    Name = "Rowan"
-                });
-
-            modelBuilder.Entity<Skill>().HasData(
-                new Skill
-                {
-                    Id = 1,
-                    Name = "C#",
-                    ApplicantId = 1,
-                },
-                new Skill
-                {
-                    Id = 2,
-                    Name = "MS SQL",
-                    ApplicantId = 1
-                },
-                new Skill
-                {
-                    Id = 3,
-                    Name = "Angular",
-                    ApplicantId= 1
-                });
-        }
-
+        public DbSet<Applicant> Applicant { get; set; }
         
     }
 }

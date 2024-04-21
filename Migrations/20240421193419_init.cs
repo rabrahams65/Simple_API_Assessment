@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Simple_API_Assessment.Migrations
 {
-    public partial class initSeed : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace Simple_API_Assessment.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,21 +40,6 @@ namespace Simple_API_Assessment.Migrations
                         principalTable: "Applicant",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Applicant",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Rowan" });
-
-            migrationBuilder.InsertData(
-                table: "Skill",
-                columns: new[] { "Id", "ApplicantId", "Name" },
-                values: new object[,]
-                {
-                    { 1, 1, "C#" },
-                    { 2, 1, "MS SQL" },
-                    { 3, 1, "Angular" }
                 });
 
             migrationBuilder.CreateIndex(
