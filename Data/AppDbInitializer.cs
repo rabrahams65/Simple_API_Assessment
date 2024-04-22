@@ -11,7 +11,7 @@ namespace Simple_API_Assessment.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<DataContext>();
 
-                context.Database.EnsureCreated();
+                context!.Database.EnsureCreated();
 
 
                 if (!context.Applicant.Any())
@@ -40,8 +40,8 @@ namespace Simple_API_Assessment.Data
                             Name = "Angular",
                             ApplicantId= 1
                         }
-                                }
-                            });
+                        }
+                    });
                     context.SaveChanges();
                 }
 
