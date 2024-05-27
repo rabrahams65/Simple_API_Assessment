@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Simple_API_Assessment.Data.Repository;
+using Simple_API_Assessment.DTO_s;
 using Simple_API_Assessment.Models;
 
 namespace Simple_API_Assessment.Controllers
@@ -14,51 +16,39 @@ namespace Simple_API_Assessment.Controllers
     public class ApplicantController : ControllerBase
     {
         private readonly IApplicantRepository _applicantRepository;
+        private readonly IMapper _mapper;
         
-        public ApplicantController(IApplicantRepository applicantRepository)
+        public ApplicantController(IApplicantRepository applicantRepository, IMapper mapper)
         {
             _applicantRepository = applicantRepository;  
+            _mapper = mapper;
         }
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Applicant>>> GetAllApplicants()
+        public async Task<ActionResult<IEnumerable<ApplicantDto>>> GetAllApplicants()
         {
-            try
-            {
-                var applicants = await _applicantRepository.GetAllApplicantsAsync();
 
-                if (applicants.Count() < 1) return NoContent();
+            var applicants = await _applicantRepository.GetAllApplicantsAsync();
 
-                return Ok(applicants);
-            }
-            catch (Exception ex)
-            {
-                 return BadRequest(ex.Message);
-            }
-            
+            if (applicants.Count() < 1) return NoContent();
+
+            return Ok(applicants);
+
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Applicant>> GetApplicantById(int id)
+        public async Task<ActionResult<ApplicantDto>> GetApplicantById(int id)
         {
-            try
+
+            var applicant  = await _applicantRepository.GetApplicantByIdAsync(id);
+
+            if (applicant == null)
             {
-                Applicant user  = await _applicantRepository.GetApplicantByIdAsync(id);
-
-                if (user == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(user);
-
-
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return BadRequest( ex.Message);
-            }
+
+            return Ok(applicant);
 
         }
     }
